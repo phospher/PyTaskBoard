@@ -11,8 +11,18 @@ module.exports = {
     module: {
         rules: [
             { test: /\.jsx?$/, use: ['babel-loader'], exclude: /node_modules/ },
-            { test: /\.less$/, use: 'style-loader!css-loader!less-loader' },
-            { test: /\.css$/, use: 'style-loader!css-loader' }
+            {
+                test: /\.less$/, use: [
+                    { loader: 'style-loader' },
+                    { loader: 'css-loader' },
+                    {
+                        loader: 'less-loader', options: {
+                            javascriptEnabled: true
+                        }
+                    }
+                ]
+            },
+            { test: /\.css$/, use: ['style-loader', 'css-loader'] }
         ]
     }
 };
