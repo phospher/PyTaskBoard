@@ -1,13 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import './style/style.less';
+import { TaskTable, AddTaskDialog } from './taskTable';
 
 const { Header, Content, Sider, Footer } = Layout;
 
 export default class TaskInput extends React.Component {
     constructor(props) {
         super(props);
+
+        this.data = [
+            {
+                project: 'Project1',
+                lastWeek: 'one\ntow',
+                nextWeek: ''
+            }
+        ];
     }
 
     render() {
@@ -28,6 +37,8 @@ export default class TaskInput extends React.Component {
                     </Sider>
                     <Layout>
                         <Content style={{ background: '#fff', marginTop: 24, marginLeft: 24, marginRight: 24, padding: 24, minHeight: 700 }}>
+                            <AddTaskDialog />
+                            <TaskTable data={this.data} />
                         </Content>
                     </Layout>
                 </Layout>
