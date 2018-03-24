@@ -1,7 +1,8 @@
 import React from 'react';
 import { Table, Button, Modal, Icon, Form, Input, Select } from 'antd';
+import { connect } from 'dva';
 
-export class TaskTable extends React.Component {
+class TaskTable extends React.Component {
     constructor(props) {
         super(props);
 
@@ -52,9 +53,23 @@ export class TaskTable extends React.Component {
     }
 }
 
+export const TaskTableWrapper = connect(({ taskInput }) => ({ data: taskInput }))(TaskTable);
+
 class AddTaskForm extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    getFormValue() {
+        return {
+            project: this.props.form.getFieldValue('project').label,
+            lastWeek: this.props.form.getFieldValue('lastWeek'),
+            nextWeek: this.props.form.getFieldValue('nextWeek')
+        };
+    }
+
+    resetFields() {
+        this.props.form.resetFields();
     }
 
     render() {
@@ -72,9 +87,9 @@ class AddTaskForm extends React.Component {
             <Form>
                 <Form.Item label="Project" {...formItemLayout}>
                     {getFieldDecorator('project', {})(
-                        <Select>
-                            <Select.Option value="1">Project1</Select.Option>
-                            <Select.Option value="2">Project2</Select.Option>
+                        <Select labelInValue>
+                            <Select.Option value="Project1">Project1</Select.Option>
+                            <Select.Option value="Project2">Project2</Select.Option>
                         </Select>
                     )}
                 </Form.Item>
@@ -95,7 +110,7 @@ class AddTaskForm extends React.Component {
 
 const AddTaskFormWrapper = Form.create()(AddTaskForm);
 
-export class AddTaskDialog extends React.Component {
+class AddTaskDialog extends React.Component {
     constructor(props) {
         super(props);
 
@@ -105,12 +120,14 @@ export class AddTaskDialog extends React.Component {
 
         this.showModal = this.showModal.bind(this);
         this.hideModal = this.hideModal.bind(this);
+        this.submitForm = this.submitForm.bind(this);
     }
 
     showModal() {
         this.setState({
             modalVisiable: true
         });
+        this.form.resetFields();
     }
 
     hideModal() {
@@ -119,14 +136,24 @@ export class AddTaskDialog extends React.Component {
         });
     }
 
+    submitForm() {
+        this.props.dispatch({
+            type: 'taskInput/addTask',
+            payload: this.form.getFormValue()
+        });
+        this.hideModal();
+    }
+
     render() {
         return (
             <div style={{ marginBottom: 10 }}>
                 <Button type="primary" onClick={this.showModal}><Icon type="plus" />Add&nbsp;Task</Button>
-                <Modal title="Add Task" visible={this.state.modalVisiable} onCancel={this.hideModal}>
-                    <AddTaskFormWrapper />
+                <Modal title="Add Task" visible={this.state.modalVisiable} onCancel={this.hideModal} onOk={this.submitForm}>
+                    <AddTaskFormWrapper wrappedComponentRef={(form) => { this.form = form }} />
                 </Modal>
             </div>
         );
     }
 }
+
+export const AddTaskDialogWrapper = connect()(AddTaskDialog);

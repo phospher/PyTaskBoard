@@ -10,7 +10,8 @@
         "axios": "0.17.1",
         "react": "16.2.0",
         "react-dom": "16.2.0",
-        "antd": "3.3.0"
+        "antd": "3.3.0",
+        "dva": "2.1.0"
     },
     "devDependencies": {
         "babel-core": "6.26.0",
