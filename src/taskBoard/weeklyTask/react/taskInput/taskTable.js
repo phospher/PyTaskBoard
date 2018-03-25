@@ -17,9 +17,13 @@ class TaskTable extends React.Component {
                 dataIndex: 'lastWeek',
                 key: 'lastWeek',
                 render: (text, record) => {
-                    return text.split('\n').map((item, key) => {
-                        return (<span key={key}>{item}<br /></span>);
-                    });
+                    if (text) {
+                        return text.split('\n').map((item, key) => {
+                            return (<span key={key}>{item}<br /></span>);
+                        });
+                    } else {
+                        return '';
+                    }
                 }
             },
             {
@@ -27,9 +31,13 @@ class TaskTable extends React.Component {
                 dataIndex: 'nextWeek',
                 key: 'nextWeek',
                 render: (text, record) => {
-                    return text.split('\n').map((item, key) => {
-                        return (<span key={key}>{item}<br /></span>);
-                    });
+                    if (text) {
+                        return text.split('\n').map((item, key) => {
+                            return (<span key={key}>{item}<br /></span>);
+                        });
+                    } else {
+                        return '';
+                    }
                 }
             },
             {
@@ -127,7 +135,9 @@ class AddTaskDialog extends React.Component {
         this.setState({
             modalVisiable: true
         });
-        this.form.resetFields();
+        if (this.form) {
+            this.form.resetFields();
+        }
     }
 
     hideModal() {

@@ -5,7 +5,8 @@ export default {
             project: 'Project1',
             lastWeek: 'one\ntow',
             nextWeek: ''
-        }],
+        }
+    ],
     reducers: {
         addTask: function (state, { payload: task }) {
             return [...state, task];
