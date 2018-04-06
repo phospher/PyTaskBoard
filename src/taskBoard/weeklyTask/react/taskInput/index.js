@@ -1,7 +1,8 @@
-import dva, { connect } from 'dva';
+import dva from 'dva';
 import model from './model';
 import TaskInput from './page'
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const app = dva();
 

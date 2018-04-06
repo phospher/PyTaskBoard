@@ -2,7 +2,8 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        taskInput: './taskInput/index.js'
+        taskInput: './taskInput/index.js',
+        login: './login/index.js'
     },
     output: {
         filename: '[name].min.js',
