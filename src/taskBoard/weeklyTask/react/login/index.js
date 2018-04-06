@@ -1,9 +1,8 @@
-import dva from 'dva';
 import Login from './page';
+import ReactDOM from 'react-dom';
 import React from 'react';
 
-const app = dva();
-
-app.router(() => <Login />);
-
-app.start('#main');
+ReactDOM.render(
+    <Login />,
+    document.getElementById('main')
+);

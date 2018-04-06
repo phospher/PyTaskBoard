@@ -1,5 +1,5 @@
 from django.contrib.auth.views import redirect_to_login
-
+from django.http import HttpResponseForbidden
 
 class LoginMiddleware:
 
@@ -14,6 +14,9 @@ class LoginMiddleware:
             return None
 
         if not request.user.is_authenticated:
-            return redirect_to_login(request.path)
+            if request.is_ajax():
+                return HttpResponseForbidden()
+            else:
+                return redirect_to_login(request.path)
         else:
             return None

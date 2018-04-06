@@ -9,7 +9,14 @@
 
 <body>
     <div id="main"></div>
+    {% csrf_token %}
+    <input id="hiddenRedirect" type="hidden" value="{{redirect}}" />
 </body>
+<script type="text/javascript">
+    var urls = {
+        CHECK_LOGIN: "{% url 'check_login' %}"
+    };
+</script>
 <script type="text/javascript" src="{% static 'js/login.min.js' %}"></script>
 
 </html>
